@@ -63,7 +63,6 @@ public class ProtoApplicationTests {
                 .andExpect(mvcResult -> "bad request".equals(mvcResult.getResponse().getContentAsString()));
     }
 
-    //happy path generateImageReturnsAnImageIfFound
     @Test
     public void generateImageReturnsAnImageIfFound() throws Exception {
         //given
@@ -82,5 +81,18 @@ public class ProtoApplicationTests {
         assertEquals(resource.contentLength(), mvcResult.getResponse().getContentLength());
     }
 
-    //negative path generateImageThrowsExceptionIfImageIsNotFound
+    @Test
+    public void generateImageThrowsExceptionIfImageIsNotFound() throws Exception {
+        //given
+        when(imageService.generate(any())).thenThrow(new ProtoImageNotFoundException());
+
+        //when & then
+        mockMvc.perform(post("/generate-image")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{ \"utmZone\": \"33\", \"latitudeBand\": \"U\", \"gridSquare\": \"UP\", \"date\": \"2018-08-04T10:00:31\", \"channelMap\": \"visible\" }"))
+                .andExpect(status().isNotFound())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(mvcResult -> "not found".equals(mvcResult.getResponse().getContentAsString()));
+    }
+
 }
