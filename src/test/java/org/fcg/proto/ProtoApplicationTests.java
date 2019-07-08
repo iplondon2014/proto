@@ -48,4 +48,7 @@ public class ProtoApplicationTests {
                 .andExpect(status().isBadRequest())
                 .andExpect(mvcResult -> "bad request".equals(mvcResult.getResponse().getContentAsString()));
     }
+
+    //happy path generateImageReturnsAnImageIfFound
+    //negative path generateImageThrowsExceptionIfImageIsNotFound
 }
