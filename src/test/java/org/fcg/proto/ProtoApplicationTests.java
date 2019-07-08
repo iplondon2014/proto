@@ -35,6 +35,17 @@ public class ProtoApplicationTests {
                 .andExpect(mvcResult -> "bad request".equals(mvcResult.getResponse().getContentAsString()));
     }
 
-    //generateImageThrowsExceptionIfNoContentBody
-    //generateImageThrowsExceptionOnEmptyContentBody
+    @Test
+    public void generateImageThrowsExceptionIfNoContentBody() throws Exception {
+        mockMvc.perform(post("/generate-image").contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andExpect(mvcResult -> "bad request".equals(mvcResult.getResponse().getContentAsString()));
+    }
+
+    @Test
+    public void generateImageThrowsExceptionOnEmptyContentBody() throws Exception {
+        mockMvc.perform(post("/generate-image").contentType(MediaType.APPLICATION_JSON).content("{}"))
+                .andExpect(status().isBadRequest())
+                .andExpect(mvcResult -> "bad request".equals(mvcResult.getResponse().getContentAsString()));
+    }
 }
