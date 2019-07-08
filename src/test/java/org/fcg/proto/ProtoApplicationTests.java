@@ -5,10 +5,17 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 
+import static org.junit.Assert.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -17,6 +24,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 public class ProtoApplicationTests {
+
+    @MockBean
+    ProtoImageService imageService;
+
+    @Autowired
+    private ResourceLoader resourceLoader;
 
     @Autowired
     private MockMvc mockMvc;
@@ -50,5 +63,22 @@ public class ProtoApplicationTests {
     }
 
     //happy path generateImageReturnsAnImageIfFound
+    @Test
+    public void generateImageReturnsAnImageIfFound() throws Exception {
+        //given
+        Resource resource = resourceLoader.getResource("classpath:sample.jpg");
+        when(imageService.generate(any())).thenReturn(resource);
+
+        //when
+        MvcResult mvcResult = mockMvc.perform(post("/generate-image")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{ \"utmZone\": \"33\", \"latitudeBand\": \"U\", \"gridSquare\": \"UP\", \"date\": \"2018-08-04T10:00:31\", \"channelMap\": \"visible\" }"))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        //then
+        assertEquals(resource.contentLength(), mvcResult.getResponse().getContentLength());
+    }
+
     //negative path generateImageThrowsExceptionIfImageIsNotFound
 }

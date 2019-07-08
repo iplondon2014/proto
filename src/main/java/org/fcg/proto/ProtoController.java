@@ -1,6 +1,11 @@
 package org.fcg.proto;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -10,6 +15,12 @@ import java.util.Objects;
 
 @RestController
 public class ProtoController {
+    private ProtoImageService imageService;
+
+    @Autowired
+    public ProtoController(ProtoImageService imageService) {
+        this.imageService = imageService;
+    }
 
     @RequestMapping(value = "/ping", produces = "text/plain")
     public String ping() {
@@ -17,9 +28,9 @@ public class ProtoController {
     }
 
     @RequestMapping(value = "/generate-image", consumes = "application/json", method = RequestMethod.POST)
-    public String generateImage(@RequestBody ProtoRequest req) {
+    public ResponseEntity<Resource> generateImage(@RequestBody ProtoRequest req) {
         validate(req);
-        return "";
+        return new ResponseEntity<>(imageService.generate(req), new HttpHeaders(), HttpStatus.OK);
     }
 
     private void validate(ProtoRequest req) {
