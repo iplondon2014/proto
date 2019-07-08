@@ -29,21 +29,21 @@ public class ProtoApplicationTests {
     }
 
     @Test
-    public void generateImageThrowsExceptionOnInvalidPostContentType() throws Exception {
+    public void generateImageThrowsExceptionOnInvalidPayloadType() throws Exception {
         mockMvc.perform(post("/generate-image").contentType(MediaType.TEXT_PLAIN))
                 .andExpect(status().isUnsupportedMediaType())
                 .andExpect(mvcResult -> "bad request".equals(mvcResult.getResponse().getContentAsString()));
     }
 
     @Test
-    public void generateImageThrowsExceptionIfNoContentBody() throws Exception {
+    public void generateImageThrowsExceptionIfNoPayload() throws Exception {
         mockMvc.perform(post("/generate-image").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest())
                 .andExpect(mvcResult -> "bad request".equals(mvcResult.getResponse().getContentAsString()));
     }
 
     @Test
-    public void generateImageThrowsExceptionOnEmptyContentBody() throws Exception {
+    public void generateImageThrowsExceptionOnEmptyPayload() throws Exception {
         mockMvc.perform(post("/generate-image").contentType(MediaType.APPLICATION_JSON).content("{}"))
                 .andExpect(status().isBadRequest())
                 .andExpect(mvcResult -> "bad request".equals(mvcResult.getResponse().getContentAsString()));
