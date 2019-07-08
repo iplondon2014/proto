@@ -26,4 +26,7 @@ public class ProtoApplicationTests {
                 .andExpect(mvcResult -> "ok".equals(mvcResult.getResponse().getContentAsString()));
     }
 
+    //generateImageThrowsExceptionOnInvalidPostContentType
+    //generateImageThrowsExceptionIfNoContentBody
+    //generateImageThrowsExceptionOnEmptyContentBody
 }
