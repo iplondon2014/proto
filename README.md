@@ -15,6 +15,7 @@
 ```
 
 ## TODO
+* Organise classes into packages
 * Externalise factory method `ProtoImageService#getImage()`, possibly as a Strategy.
 * Externalise validator `ProtoController#validate()`, possibly with javax.validation.
 * Make implementation of `ProtoImageGenerator.class` more sophisticated.
