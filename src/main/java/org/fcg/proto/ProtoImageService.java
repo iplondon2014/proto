@@ -11,9 +11,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Objects;
 
-import static org.fcg.proto.ProtoRequest.ChannelMap.vegetation;
-import static org.fcg.proto.ProtoRequest.ChannelMap.visible;
-import static org.fcg.proto.ProtoRequest.ChannelMap.waterVapor;
+import static org.fcg.proto.ProtoRequest.ChannelMap.*;
 
 @Component
 public class ProtoImageService {

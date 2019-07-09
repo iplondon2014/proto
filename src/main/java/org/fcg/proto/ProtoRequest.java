@@ -47,7 +47,7 @@ public class ProtoRequest {
         return channelMap;
     }
 
-    public String getImageName(String sensorBand){
+    public String getImageName(String sensorBand) {
         return String.format("T%s%s%s_%s_%s.tif",
                 utmZone,
                 latitudeBand,

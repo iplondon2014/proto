@@ -15,10 +15,9 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 
 import static java.awt.image.BufferedImage.TYPE_INT_RGB;
-import static org.fcg.proto.ProtoRequest.ChannelMap.vegetation;
-import static org.fcg.proto.ProtoRequest.ChannelMap.visible;
-import static org.fcg.proto.ProtoRequest.ChannelMap.waterVapor;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.fcg.proto.ProtoRequest.ChannelMap.*;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.contains;
