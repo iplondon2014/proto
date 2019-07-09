@@ -18,5 +18,6 @@
 * Externalise factory method `ProtoImageService#getImage()`, possibly as a Strategy.
 * Externalise validator `ProtoController#validate()`, possibly with javax.validation.
 * Make implementation of `ProtoImageGenerator.class` more sophisticated.
+* Handle edge cases of some of the RBG files missing 
 * and more...
 

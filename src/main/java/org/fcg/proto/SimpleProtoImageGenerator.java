@@ -3,6 +3,9 @@ package org.fcg.proto;
 import org.springframework.stereotype.Component;
 
 import java.awt.image.BufferedImage;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
 
 /**
  * Simple logic to combine RGB channel into one.
@@ -12,6 +15,8 @@ import java.awt.image.BufferedImage;
 public class SimpleProtoImageGenerator implements ProtoImageGenerator {
     @Override
     public BufferedImage generate(BufferedImage redImage, BufferedImage greenImage, BufferedImage blueImage) {
+        Arrays.asList(redImage, greenImage, blueImage).forEach(imageFile -> validateNotNull(imageFile));
+
         int width = blueImage.getWidth();
         int height = blueImage.getHeight();
         BufferedImage img = new BufferedImage(width, height, BufferedImage.TYPE_INT_BGR);
@@ -32,6 +37,8 @@ public class SimpleProtoImageGenerator implements ProtoImageGenerator {
 
     @Override
     public BufferedImage generate(BufferedImage blueImage) {
+        validateNotNull(blueImage);
+
         int width = blueImage.getWidth();
         int height = blueImage.getHeight();
         BufferedImage img = new BufferedImage(width, height, BufferedImage.TYPE_INT_BGR);
@@ -45,4 +52,11 @@ public class SimpleProtoImageGenerator implements ProtoImageGenerator {
         }
         return img;
     }
+
+    private void validateNotNull(BufferedImage imageFile) {
+        if (Objects.isNull(imageFile)) {
+            throw new ProtoImageNotFoundException();
+        }
+    }
+
 }

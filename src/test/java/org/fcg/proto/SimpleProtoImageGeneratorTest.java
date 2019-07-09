@@ -24,6 +24,16 @@ class SimpleProtoImageGeneratorTest {
     }
 
     @Test
+    void imageGeneratorThrowsExceptionIfAnyImageIsNull() {
+        //given
+        BufferedImage image = new BufferedImage(5, 5, TYPE_INT_RGB);
+
+        //when
+        assertThrows(ProtoImageNotFoundException.class, () ->
+                imageGenerator.generate(image, null, image));
+    }
+
+    @Test
     void imageGeneratorGeneratesBlueImage() {
         //given
         BufferedImage image = new BufferedImage(5, 5, TYPE_INT_RGB);
