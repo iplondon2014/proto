@@ -14,6 +14,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -27,13 +29,30 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class ProtoApplicationTests {
 
     @MockBean
-    ProtoImageService imageService;
+    private ProtoImageService imageService;
 
     @Autowired
     private ResourceLoader resourceLoader;
 
     @Autowired
     private MockMvc mockMvc;
+
+    @Autowired
+    private ProtoController protoController;
+
+    @Autowired
+    private ProtoImageGenerator imageGenerator;
+
+    @Autowired
+    private ProtoImageReader imageReader;
+
+    @Test
+    public void contextLoads() {
+        assertNotNull(protoController);
+        assertNotNull(imageService);
+        assertNotNull(imageGenerator);
+        assertNotNull(imageReader);
+    }
 
     @Test
     public void pingWorks() throws Exception {

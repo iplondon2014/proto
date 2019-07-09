@@ -3,6 +3,7 @@ package org.fcg.proto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
+import org.springframework.stereotype.Component;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -10,6 +11,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Objects;
 
+@Component
 public class ProtoImageService {
     private ProtoImageGenerator imageGenerator;
     private ProtoImageReader imageReader;
@@ -27,7 +29,6 @@ public class ProtoImageService {
         ImageIO.write(image, "jpg", os);
 
         return new ByteArrayResource(os.toByteArray());
-
     }
 
     private BufferedImage getImage(ProtoRequest req) throws IOException {
@@ -35,23 +36,19 @@ public class ProtoImageService {
 
         if (req.getChannelMap().equals("visible")) {
             return imageGenerator.generate(
-                    imageReader.read(getImageName("B04")),
-                    imageReader.read(getImageName("B03")),
-                    imageReader.read(getImageName("B02")));
+                    imageReader.read(req.getImageName("B04")),
+                    imageReader.read(req.getImageName("B03")),
+                    imageReader.read(req.getImageName("B02")));
         } else if (req.getChannelMap().equals("vegetation")) {
             return imageGenerator.generate(
-                    imageReader.read(getImageName("B05")),
-                    imageReader.read(getImageName("B06")),
-                    imageReader.read(getImageName("B07")));
-        } else if (req.getChannelMap() == "waterVapor") {
+                    imageReader.read(req.getImageName("B05")),
+                    imageReader.read(req.getImageName("B06")),
+                    imageReader.read(req.getImageName("B07")));
+        } else if (req.getChannelMap().equals("waterVapor")) {
             return imageGenerator.generate(
-                    imageReader.read(getImageName("B09")));
+                    imageReader.read(req.getImageName("B09")));
         } else {
             throw new IllegalArgumentException();
         }
-    }
-
-    private String getImageName(String sensorBand) {
-        return sensorBand;
     }
 }

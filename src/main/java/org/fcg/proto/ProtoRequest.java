@@ -3,6 +3,9 @@ package org.fcg.proto;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 public class ProtoRequest {
     private String utmZone;
     private String latitudeBand;
@@ -42,5 +45,14 @@ public class ProtoRequest {
 
     public String getChannelMap() {
         return channelMap;
+    }
+
+    public String getImageName(String sensorBand){
+        return String.format("T%s%s%s_%s_%s.tif",
+                utmZone,
+                latitudeBand,
+                gridSquare,
+                LocalDateTime.parse(date).format(DateTimeFormatter.ofPattern("yyyyMMdd'T'HHmmss")),
+                sensorBand);
     }
 }

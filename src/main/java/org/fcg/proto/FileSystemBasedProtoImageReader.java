@@ -18,6 +18,7 @@ public class FileSystemBasedProtoImageReader implements ProtoImageReader {
 
     @Override
     public BufferedImage read(String imageName) throws IOException {
+        System.out.println("file="+basePath+"/"+imageName);
         return ImageIO.read(new File(basePath+"/"+imageName));
     }
 }
