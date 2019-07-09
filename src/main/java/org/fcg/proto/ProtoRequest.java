@@ -7,19 +7,19 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class ProtoRequest {
-    private String utmZone;
-    private String latitudeBand;
+    private int utmZone;
+    private char latitudeBand;
     private String gridSquare;
-    private String date;
-    private String channelMap;
+    private LocalDateTime date;
+    private ChannelMap channelMap;
 
     @JsonCreator
     public ProtoRequest(
-            @JsonProperty("utmZone") String utmZone,
-            @JsonProperty("latitudeBand") String latitudeBand,
+            @JsonProperty("utmZone") int utmZone,
+            @JsonProperty("latitudeBand") char latitudeBand,
             @JsonProperty("gridSquare") String gridSquare,
-            @JsonProperty("date") String date,
-            @JsonProperty("channelMap") String channelMap) {
+            @JsonProperty("date") LocalDateTime date,
+            @JsonProperty("channelMap") ChannelMap channelMap) {
         this.utmZone = utmZone;
         this.latitudeBand = latitudeBand;
         this.gridSquare = gridSquare;
@@ -27,11 +27,11 @@ public class ProtoRequest {
         this.channelMap = channelMap;
     }
 
-    public String getUtmZone() {
+    public int getUtmZone() {
         return utmZone;
     }
 
-    public String getLatitudeBand() {
+    public char getLatitudeBand() {
         return latitudeBand;
     }
 
@@ -39,11 +39,11 @@ public class ProtoRequest {
         return gridSquare;
     }
 
-    public String getDate() {
+    public LocalDateTime getDate() {
         return date;
     }
 
-    public String getChannelMap() {
+    public ChannelMap getChannelMap() {
         return channelMap;
     }
 
@@ -52,7 +52,13 @@ public class ProtoRequest {
                 utmZone,
                 latitudeBand,
                 gridSquare,
-                LocalDateTime.parse(date).format(DateTimeFormatter.ofPattern("yyyyMMdd'T'HHmmss")),
+                date.format(DateTimeFormatter.ofPattern("yyyyMMdd'T'HHmmss")),
                 sensorBand);
+    }
+
+    public enum ChannelMap {
+        visible,
+        vegetation,
+        waterVapor;
     }
 }

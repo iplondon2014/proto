@@ -13,3 +13,11 @@
 ```
 ./mvnw spring-boot:run
 ```
+
+##TODO
+* Externalise factory method `ProtoImageService#getImage()`, possibly as a Strategy.
+* Externalise validator `ProtoController#validate()`, possibly with javax.validation.
+* Make `ProtoExceptionHandler.class` more sophisticated.
+* Make implementation of `ProtoImageGenerator.class` more sophisticated.
+* and more...
+

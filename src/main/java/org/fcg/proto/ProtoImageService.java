@@ -11,6 +11,10 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Objects;
 
+import static org.fcg.proto.ProtoRequest.ChannelMap.vegetation;
+import static org.fcg.proto.ProtoRequest.ChannelMap.visible;
+import static org.fcg.proto.ProtoRequest.ChannelMap.waterVapor;
+
 @Component
 public class ProtoImageService {
     private ProtoImageGenerator imageGenerator;
@@ -34,17 +38,17 @@ public class ProtoImageService {
     private BufferedImage getImage(ProtoRequest req) throws IOException {
         Objects.requireNonNull(req);
 
-        if (req.getChannelMap().equals("visible")) {
+        if (req.getChannelMap() == visible) {
             return imageGenerator.generate(
                     imageReader.read(req.getImageName("B04")),
                     imageReader.read(req.getImageName("B03")),
                     imageReader.read(req.getImageName("B02")));
-        } else if (req.getChannelMap().equals("vegetation")) {
+        } else if (req.getChannelMap() == vegetation) {
             return imageGenerator.generate(
                     imageReader.read(req.getImageName("B05")),
                     imageReader.read(req.getImageName("B06")),
                     imageReader.read(req.getImageName("B07")));
-        } else if (req.getChannelMap().equals("waterVapor")) {
+        } else if (req.getChannelMap() == waterVapor) {
             return imageGenerator.generate(
                     imageReader.read(req.getImageName("B09")));
         } else {

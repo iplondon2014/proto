@@ -41,11 +41,11 @@ public class ProtoController {
 
     private void validate(ProtoRequest req) {
         if (Objects.isNull(req)
-                || Objects.isNull(req.getUtmZone()) || req.getUtmZone().isBlank()
-                || Objects.isNull(req.getLatitudeBand()) || req.getLatitudeBand().isBlank()
+                || req.getUtmZone() <= 1
+                || !Character.isLetter(req.getLatitudeBand())
                 || Objects.isNull(req.getGridSquare()) || req.getGridSquare().isBlank()
-                || Objects.isNull(req.getDate()) || req.getDate().isBlank()
-                || Objects.isNull(req.getChannelMap()) || req.getChannelMap().isBlank()) {
+                || Objects.isNull(req.getDate())
+                || Objects.isNull(req.getChannelMap())) {
             throw new IllegalArgumentException();
         }
     }

@@ -12,8 +12,12 @@ import org.springframework.core.io.Resource;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.time.LocalDateTime;
 
 import static java.awt.image.BufferedImage.TYPE_INT_RGB;
+import static org.fcg.proto.ProtoRequest.ChannelMap.vegetation;
+import static org.fcg.proto.ProtoRequest.ChannelMap.visible;
+import static org.fcg.proto.ProtoRequest.ChannelMap.waterVapor;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -47,7 +51,7 @@ class ProtoImageServiceTest {
     @Test
     void imageServiceChecksGeneratesImageForVisible() throws IOException {
         //given
-        ProtoRequest req = new ProtoRequest("33", "U", "UP", "2018-08-04T10:00:31", "visible");
+        ProtoRequest req = new ProtoRequest(33, 'U', "UP", LocalDateTime.parse("2018-08-04T10:00:31"), visible);
         when(mockImageGenerator.generate(any(), any(), any())).thenReturn(DUMMY_IMAGE);
 
         //when
@@ -63,7 +67,7 @@ class ProtoImageServiceTest {
     @Test
     void imageServiceChecksGeneratesImageForVegetation() throws IOException {
         //given
-        ProtoRequest req = new ProtoRequest("33", "U", "UP", "2018-08-04T10:00:31", "vegetation");
+        ProtoRequest req = new ProtoRequest(33, 'U', "UP", LocalDateTime.parse("2018-08-04T10:00:31"), vegetation);
         when(mockImageGenerator.generate(any(), any(), any())).thenReturn(DUMMY_IMAGE);
 
         //when
@@ -79,7 +83,7 @@ class ProtoImageServiceTest {
     @Test
     void imageServiceChecksGeneratesImageForWaterVapor() throws IOException {
         //given
-        ProtoRequest req = new ProtoRequest("33", "U", "UP", "2018-08-04T10:00:31", "waterVapor");
+        ProtoRequest req = new ProtoRequest(33, 'U', "UP", LocalDateTime.parse("2018-08-04T10:00:31"), waterVapor);
         when(mockImageGenerator.generate(any())).thenReturn(DUMMY_IMAGE);
 
         //when
@@ -93,7 +97,7 @@ class ProtoImageServiceTest {
     @Test
     void imageServiceThrowsExceptionOnInvalidChannelMap() throws IOException {
         //given
-        ProtoRequest req = new ProtoRequest("33", "U", "UP", "2018-08-04T10:00:31", "");
+        ProtoRequest req = new ProtoRequest(33, 'U', "UP", LocalDateTime.parse("2018-08-04T10:00:31"), null);
         when(mockImageGenerator.generate(any(), any(), any())).thenReturn(DUMMY_IMAGE);
 
         //when & then
