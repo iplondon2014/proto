@@ -14,6 +14,12 @@
 ./mvnw spring-boot:run
 ```
 
+## Test
+* POST the following as `application/json` to `localhost:8080/generate-image` 
+```
+{ "utmZone": 33, "latitudeBand": "U", "gridSquare": "UP", "date": "2018-08-04T10:00:31", "channelMap": "visible" }
+```
+
 ## TODO
 * Organise classes into packages
 * Externalise factory method `ProtoImageService#getImage()`, possibly as a Strategy.
