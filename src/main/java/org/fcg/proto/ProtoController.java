@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
 import java.util.Objects;
 
 @RestController
@@ -32,7 +33,7 @@ public class ProtoController {
     }
 
     @RequestMapping(value = "/generate-image", consumes = "application/json", method = RequestMethod.POST)
-    public ResponseEntity<Resource> generateImage(@RequestBody ProtoRequest req) {
+    public ResponseEntity<Resource> generateImage(@RequestBody ProtoRequest req) throws IOException {
         validate(req);
         Resource resource = imageService.generate(req);
         return new ResponseEntity<>(resource, headers, HttpStatus.OK);

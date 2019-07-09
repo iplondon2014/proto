@@ -1,15 +1,9 @@
 package org.fcg.proto;
 
-import org.springframework.core.io.Resource;
-import org.springframework.stereotype.Component;
+import java.awt.image.BufferedImage;
 
-@Component
-public class ProtoImageGenerator {
-    public Resource generate(Object r, Object g, Object b) {
-        return null;
-    }
+public interface ProtoImageGenerator {
+    BufferedImage generate(BufferedImage redImage, BufferedImage greenImage, BufferedImage blueImage);
 
-    public Resource generate(Object b09) {
-        return null;
-    }
+    BufferedImage generate(BufferedImage blueImage);
 }

@@ -1,8 +1,13 @@
 package org.fcg.proto;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.Objects;
 
 public class ProtoImageService {
@@ -15,7 +20,17 @@ public class ProtoImageService {
         this.imageReader = imageReader;
     }
 
-    public Resource generate(final ProtoRequest req) {
+    public Resource generate(final ProtoRequest req) throws IOException {
+        BufferedImage image = getImage(req);
+
+        ByteArrayOutputStream os = new ByteArrayOutputStream();
+        ImageIO.write(image, "jpg", os);
+
+        return new ByteArrayResource(os.toByteArray());
+
+    }
+
+    private BufferedImage getImage(ProtoRequest req) throws IOException {
         Objects.requireNonNull(req);
 
         if (req.getChannelMap().equals("visible")) {

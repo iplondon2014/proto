@@ -1,7 +1,8 @@
 package org.fcg.proto;
 
-public class ProtoImageReader {
-    public Object read(String imageName) {
-        return null;
-    }
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+
+public interface ProtoImageReader {
+    BufferedImage read(String imageName) throws IOException;
 }

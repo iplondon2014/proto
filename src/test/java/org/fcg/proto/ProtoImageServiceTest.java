@@ -10,8 +10,10 @@ import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 import org.springframework.core.io.Resource;
 
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 
+import static java.awt.image.BufferedImage.TYPE_INT_RGB;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -21,21 +23,19 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
 class ProtoImageServiceTest {
+    private final static BufferedImage DUMMY_IMAGE = new BufferedImage(5, 5, TYPE_INT_RGB);
+
     @Mock
     private ProtoImageGenerator mockImageGenerator;
 
     @Mock
     private ProtoImageReader mockImageReader;
 
-    @Mock
-    private Resource mockResource;
-
     @InjectMocks
     private ProtoImageService imageService;
 
     @BeforeEach
     void setUp() throws IOException {
-        when(mockResource.contentLength()).thenReturn(100L);
         when(mockImageReader.read(anyString())).thenReturn(null);
     }
 
@@ -48,7 +48,7 @@ class ProtoImageServiceTest {
     void imageServiceChecksGeneratesImageForVisible() throws IOException {
         //given
         ProtoRequest req = new ProtoRequest("33", "U", "UP", "2018-08-04T10:00:31", "visible");
-        when(mockImageGenerator.generate(any(), any(), any())).thenReturn(mockResource);
+        when(mockImageGenerator.generate(any(), any(), any())).thenReturn(DUMMY_IMAGE);
 
         //when
         Resource result = imageService.generate(req);
@@ -64,7 +64,7 @@ class ProtoImageServiceTest {
     void imageServiceChecksGeneratesImageForVegetation() throws IOException {
         //given
         ProtoRequest req = new ProtoRequest("33", "U", "UP", "2018-08-04T10:00:31", "vegetation");
-        when(mockImageGenerator.generate(any(), any(), any())).thenReturn(mockResource);
+        when(mockImageGenerator.generate(any(), any(), any())).thenReturn(DUMMY_IMAGE);
 
         //when
         Resource result = imageService.generate(req);
@@ -80,7 +80,7 @@ class ProtoImageServiceTest {
     void imageServiceChecksGeneratesImageForWaterVapor() throws IOException {
         //given
         ProtoRequest req = new ProtoRequest("33", "U", "UP", "2018-08-04T10:00:31", "waterVapor");
-        when(mockImageGenerator.generate(any())).thenReturn(mockResource);
+        when(mockImageGenerator.generate(any())).thenReturn(DUMMY_IMAGE);
 
         //when
         Resource result = imageService.generate(req);
@@ -94,7 +94,7 @@ class ProtoImageServiceTest {
     void imageServiceThrowsExceptionOnInvalidChannelMap() throws IOException {
         //given
         ProtoRequest req = new ProtoRequest("33", "U", "UP", "2018-08-04T10:00:31", "");
-        when(mockImageGenerator.generate(any(), any(), any())).thenReturn(mockResource);
+        when(mockImageGenerator.generate(any(), any(), any())).thenReturn(DUMMY_IMAGE);
 
         //when & then
         assertThrows(IllegalArgumentException.class, () -> imageService.generate(req));
